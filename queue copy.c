@@ -316,10 +316,6 @@ void _node_quick_sort(struct list_head *upper_node, struct list_head *lower_node
         _node_quick_sort(top->next, pivot->prev, head);
     }
     if (bot->prev!=pivot) {
-        while (strcmp(list_entry(pivot, element_t, list)->value, 
-            list_entry(pivot->next, element_t, list)->value)==0) {
-            pivot = pivot->next;
-        }
         _node_quick_sort(pivot->next, bot->prev, head);
     }
 }

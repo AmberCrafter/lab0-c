@@ -38,7 +38,7 @@ $(GIT_HOOKS):
 
 # downlaod dependency
 webserver:
-	@repo_download.sh 
+	@scripts/repo_download
 	@echo 
 
 OBJS := qtest.o report.o console.o harness.o queue.o \

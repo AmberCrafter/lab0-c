@@ -7,6 +7,9 @@ qtest
 core*
 .cmd_history
 
+# github repo
+tiny-web-server
+
 # ctags files
 TAGS
 .TAGS

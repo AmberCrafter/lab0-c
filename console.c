@@ -77,7 +77,7 @@ static void pop_file();
 static bool interpret_cmda(int argc, char *argv[]);
 
 static int listenfd;
-static bool noise=true;
+static bool noise = true;
 
 /* Add a new command */
 void add_cmd(char *name, cmd_function operation, char *documentation)
@@ -398,7 +398,7 @@ static bool do_time(int argc, char *argv[])
     return ok;
 }
 
-static bool do_web(int args, char *argv[]) 
+static bool do_web(int args, char *argv[])
 {
     listenfd = open_listenfd(9999);
     noise = false;
@@ -595,13 +595,13 @@ int cmd_select(int nfds,
         cmdline = readline();
         if (cmdline)
             interpret_cmd(cmdline);
-     } else if (readfds && FD_ISSET(listenfd, readfds)) {
+    } else if (readfds && FD_ISSET(listenfd, readfds)) {
         FD_CLR(listenfd, readfds);
         result--;
         int connfd;
         struct sockaddr_in clientaddr;
         socklen_t clientlen = sizeof(clientaddr);
-        connfd = accept(listenfd,(struct sockaddr *) &clientaddr, &clientlen); 
+        connfd = accept(listenfd, (struct sockaddr *) &clientaddr, &clientlen);
 
         char *p = process(connfd, &clientaddr);
         if (p)
@@ -678,14 +678,12 @@ bool run_console(char *infile_name)
             linenoiseFree(cmdline);
         }
         if (!noise) {
-            while (!cmd_done())
-            {
+            while (!cmd_done()) {
                 cmd_select(0, NULL, NULL, NULL, NULL);
             }
         }
     } else {
-        while (!cmd_done()) 
-        {
+        while (!cmd_done()) {
             cmd_select(0, NULL, NULL, NULL, NULL);
         }
     }

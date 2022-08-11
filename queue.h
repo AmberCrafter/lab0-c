@@ -176,7 +176,7 @@ void q_sort(struct list_head *head);
  *
  * No effect if queue is NULL or empty. If there has only one element, do
  * nothing.
- * 
+ *
  * Return: true for success, false if queue is NULL, empty or singular.
  */
 bool q_shuffle(struct list_head *head);

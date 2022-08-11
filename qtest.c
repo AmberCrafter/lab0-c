@@ -1037,6 +1037,5 @@ int main(int argc, char *argv[])
 
     /* Do finish_cmd() before check whether ok is true or false */
     ok = finish_cmd() && ok;
-
     return !ok;
 }

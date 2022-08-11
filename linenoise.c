@@ -417,7 +417,7 @@ static int completeLine(struct linenoiseState *ls)
                 freeCompletions(&lc);
                 return -1;
             }
-
+            
             switch (c) {
             case 9: /* tab */
                 i = (i + 1) % (lc.len + 1);
@@ -441,7 +441,7 @@ static int completeLine(struct linenoiseState *ls)
             }
         }
     }
-
+    
     freeCompletions(&lc);
     return c; /* Return last read character */
 }
@@ -857,7 +857,7 @@ static int linenoiseEdit(int stdin_fd,
                          const char *prompt)
 {
     struct linenoiseState l;
-
+    
     /* Populate the linenoise state that we pass to functions implementing
      * specific editing functionalities. */
     l.ifd = stdin_fd;

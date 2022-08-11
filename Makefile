@@ -3,7 +3,9 @@ CFLAGS = -O1 -g -Wall -Werror -Idudect -I.
 
 GIT_HOOKS := .git/hooks/applied
 DUT_DIR := dudect
-all: $(GIT_HOOKS) qtest
+TINY_DIR := tiny-web-server
+TINY_REPO := https://github.com/AmberCrafter/tiny-web-server.git
+all: $(GIT_HOOKS) webserver qtest
 
 tid := 0
 
@@ -34,9 +36,14 @@ $(GIT_HOOKS):
 	@scripts/install-git-hooks
 	@echo
 
+# downlaod dependency
+webserver:
+	@repo_download.sh 
+	@echo 
+
 OBJS := qtest.o report.o console.o harness.o queue.o \
         random.o dudect/constant.o dudect/fixture.o dudect/ttest.o \
-        linenoise.o
+        linenoise.o tiny-web-server/tiny.o
 
 deps := $(OBJS:%.o=.%.o.d)
 
@@ -45,7 +52,7 @@ qtest: $(OBJS)
 	$(Q)$(CC) $(LDFLAGS) -o $@ $^ -lm
 
 %.o: %.c
-	@mkdir -p .$(DUT_DIR)
+	@mkdir -p .$(DUT_DIR) -p .$(TINY_DIR)
 	$(VECHO) "  CC\t$@\n"
 	$(Q)$(CC) -o $@ $(CFLAGS) -c -MMD -MF .$@.d $<
 
@@ -74,6 +81,7 @@ clean:
 	rm -f $(OBJS) $(deps) *~ qtest /tmp/qtest.*
 	rm -rf .$(DUT_DIR)
 	rm -rf *.dSYM
+	rm -rf tiny-web-server
 	(cd traces; rm -f *~)
 
 -include $(deps)

@@ -1,41 +1,16 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stddef.h>
-#include "queue.h"
-#include "list.h"
 #include <string.h>
-
-bool q_insert_head(struct list_head *head, char *s)
-{
-    if (!head) return false;
-    element_t *ele = malloc(sizeof(element_t));
-    if (!ele) return false;
-    ele->value = strdup(s);
-    INIT_LIST_HEAD(&ele->list);
-    list_add(&ele->list,head);
-    return true;
-}
+#include <time.h>
 
 int main() {
-    struct list_head *que = q_new();
-    q_insert_head(que, "a");
-    q_insert_head(que, "b");
-    q_insert_head(que, "c");
-    q_insert_head(que, "c");
-    q_insert_head(que, "d");
+    srand(time(NULL));
 
-    // int cnt =0;
-    // int big_list_size = 80;
+    double x = (double) rand() / (RAND_MAX + 1.0);
+    int y = (int) (x * 20.0);
 
-    // struct list_head *ori = head;
-    // struct list_head *cur = head->next;
-    // while (ori != cur && cnt < lcnt) {
-    //     element_t *e = list_entry(cur, element_t, list);
-    //     if (cnt < big_list_size)
-    //         report_noreturn(vlevel, cnt == 0 ? "%s" : " %s", e->value);
-    //     cnt++;
-    //     cur = cur->next;
-    // }
-
+    printf("rand: %f\n", x);
+    printf("rand: %d\n", y);
     return 0;
 }

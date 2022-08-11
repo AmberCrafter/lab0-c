@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
+#include <time.h>
 #include "queue.h"
 
 /* Notice: sometimes, Cppcheck would find the potential NULL pointer bugs,
@@ -46,8 +46,15 @@ bool q_insert_head(struct list_head *head, char *s)
 {
     if (!head) return false;
     element_t *ele = malloc(sizeof(element_t));
-    if (!ele) return false;
+    
+    if (ele==NULL) {
+        return false;
+    } 
     ele->value = strdup(s);
+    if (ele->value==NULL) {
+        free(ele);
+        return false;
+    }
     INIT_LIST_HEAD(&ele->list);
     list_add(&ele->list,head);
     return true;
@@ -58,8 +65,14 @@ bool q_insert_tail(struct list_head *head, char *s)
 {
     if (!head) return false;
     element_t *ele = malloc(sizeof(element_t));
-    if (!ele) return false;
+    if (ele==NULL) {
+        return false;
+    } 
     ele->value = strdup(s);
+    if (ele->value==NULL) {
+        free(ele);
+        return false;
+    }
     INIT_LIST_HEAD(&ele->list);
     list_add_tail(&ele->list,head);
     return true;
@@ -69,7 +82,7 @@ bool q_insert_tail(struct list_head *head, char *s)
 element_t *q_remove_head(struct list_head *head, char *sp, size_t bufsize)
 {
     // sp used to store the remove target
-    if (!head || list_empty(head)) return NULL;
+    if (head==NULL || list_empty(head)) return NULL;
     element_t *ele = list_first_entry(head, element_t, list);
     list_del(head->next);
     if (sp) {
@@ -127,6 +140,7 @@ bool q_delete_mid(struct list_head *head)
     element_t *ele = container_of(node, element_t, list);
     free(ele->value);
     list_del(node);
+    free(ele);
     return true;
 }
 
@@ -206,7 +220,7 @@ void q_reverse(struct list_head *head) {
 
 /* Sort elements of queue in ascending order */
 void q_sort(struct list_head *head) {
-    if (!head || list_empty(head)) return;
+    if (head==NULL || list_empty(head) || list_is_singular(head)) return;
     // merge sort
     struct list_head *list, *last;
     list = _node_break_circle_and_remove_head(head);
@@ -216,6 +230,29 @@ void q_sort(struct list_head *head) {
     last->next = head;
     head->prev = last;
 }
+
+// bool q_shuffle(struct list_head *head) {
+//     if (list_empty(head)) return false;
+//     if (list_is_singular(head)) return true;
+
+//     // set rand seed
+//     srand(time(NULL));
+    
+//     struct list_head *curr;
+//     int length = q_size(head);
+//     for (int i=0; i<length; i++) {
+//         int rnd = (int) ((double) rand() / (RAND_MAX + 1.0) * (length-i));
+//         curr = head->next;
+//         for (int j=0; j<rnd;j++) {
+//             curr = curr->next;
+//         }
+//         list_move_tail(curr, head);
+//     }
+
+//     return true;
+// }
+
+
 
 /* private function */
 struct list_head *_node_break_circle_and_remove_head(struct list_head *head) {

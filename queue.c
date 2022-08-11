@@ -17,6 +17,7 @@
 /* private function */
 struct list_head *_node_merge_sort(struct list_head *head, struct list_head **last);
 struct list_head *_node_break_circle_and_remove_head(struct list_head *head);
+bool q_shuffle(struct list_head *head);
 /* private function */
 
 
@@ -231,26 +232,26 @@ void q_sort(struct list_head *head) {
     head->prev = last;
 }
 
-// bool q_shuffle(struct list_head *head) {
-//     if (list_empty(head)) return false;
-//     if (list_is_singular(head)) return true;
+bool q_shuffle(struct list_head *head) {
+    if (list_empty(head)) return false;
+    if (list_is_singular(head)) return true;
 
-//     // set rand seed
-//     srand(time(NULL));
+    // set rand seed
+    srand(time(NULL));
     
-//     struct list_head *curr;
-//     int length = q_size(head);
-//     for (int i=0; i<length; i++) {
-//         int rnd = (int) ((double) rand() / (RAND_MAX + 1.0) * (length-i));
-//         curr = head->next;
-//         for (int j=0; j<rnd;j++) {
-//             curr = curr->next;
-//         }
-//         list_move_tail(curr, head);
-//     }
+    struct list_head *curr;
+    int length = q_size(head);
+    for (int i=0; i<length; i++) {
+        int rnd = (int) ((double) rand() / (RAND_MAX + 1.0) * (length-i));
+        curr = head->next;
+        for (int j=0; j<rnd;j++) {
+            curr = curr->next;
+        }
+        list_move_tail(curr, head);
+    }
 
-//     return true;
-// }
+    return true;
+}
 
 
 

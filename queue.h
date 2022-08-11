@@ -169,4 +169,16 @@ void q_reverse(struct list_head *head);
  */
 void q_sort(struct list_head *head);
 
+
+/**
+ * q_shuffle() - Shuffle elements of queue
+ * @head: header of queue
+ *
+ * No effect if queue is NULL or empty. If there has only one element, do
+ * nothing.
+ * 
+ * Return: true for success, false if queue is NULL, empty or singular.
+ */
+bool q_shuffle(struct list_head *head);
+
 #endif /* LAB0_QUEUE_H */
